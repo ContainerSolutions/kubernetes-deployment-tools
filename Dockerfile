@@ -55,4 +55,7 @@ RUN cd /tmp \
     && curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
     && tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz \
     && mv linux-amd64/helm ${BIN_PATH} \
-    && rm -rf /tmp/*
+    && rm -rf /tmp/* \
+    && helm init --client-only \
+    && helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+
