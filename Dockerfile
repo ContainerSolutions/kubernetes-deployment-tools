@@ -12,7 +12,7 @@ ENV HELM_VERSION=v2.9.1
 ENV HELM_FILENAME=helm-${HELM_VERSION}-linux-amd64.tar.gz
 
 RUN apt-get update \
-    && apt-get -y install curl unzip \
+    && apt-get -y install build-essential curl unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
