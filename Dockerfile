@@ -13,7 +13,22 @@ ENV HELM_FILENAME=helm-${HELM_VERSION}-linux-amd64.tar.gz
 
 RUN apt-get update \
     && apt-get -y install build-essential curl unzip \
+        python-dev \
+        python-setuptools \
+        python-pip \
+        apt-transport-https \
+        lsb-release \
+        git \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Google cloud SDK
+ENV CLOUD_SDK_VERSION 206.0.0
+RUN pip install -U crcmod   && \
+    export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+    echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update && \
+    apt-get install -y google-cloud-sdk=${CLOUD_SDK_VERSION}-0
 
 # Create non-root user
 RUN groupadd -r deployment --gid=999 && useradd --create-home --gid deployment --uid=999 deployment
@@ -57,5 +72,6 @@ RUN cd /tmp \
     && mv linux-amd64/helm ${BIN_PATH} \
     && rm -rf /tmp/* \
     && helm init --client-only \
-    && helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    && helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/ \
+    && helm plugin install https://github.com/viglesiasce/helm-gcs.git --version v0.2.0
 
