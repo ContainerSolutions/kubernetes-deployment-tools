@@ -18,6 +18,7 @@ RUN apt-get update \
         apt-transport-https \
         lsb-release \
         git \
+        socat \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Google cloud SDK
