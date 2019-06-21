@@ -7,7 +7,7 @@ Docker image with a series of tools intended at Kubernetes deployments:
 
 - Kubectl (v1.15.0)
 - Helm (v2.10.0)
-- Google Cloud SDK (v206.0.0)
+- Google Cloud SDK (v251.0.0)
 - Terraform (v0.11.14)
 - Terraform Helm Provider (v0.6.0)
 
